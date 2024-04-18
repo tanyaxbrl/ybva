@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Yaşam Bilimlerinde Veri Analizi - 18&nbsp; Kontrol yapıları</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../03-bilgisayarli-dusunme/02-ileri-seviye-r-02.html" rel="next">
+<link href="../02-veri-analizi/13-t-test.html" rel="prev">
+<link href="../images/ybva.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sonuç yok",
+    "search-matching-documents-text": "eşleşen belgeler",
+    "search-copy-link-title": "Aramak için bağlantıyı kopyalayın",
+    "search-hide-matches-text": "Ek eşleşmeleri gizle",
+    "search-more-match-text": "bu belgede daha fazla eşleşme",
+    "search-more-matches-text": "bu belgede daha fazla eşleşmeler",
+    "search-clear-button-title": "Temizle",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "İptal et",
+    "search-submit-button-title": "Göndermek",
+    "search-label": "Aramak"
+  }
+}</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Kenar çubuğunu değiştir" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../03-bilgisayarli-dusunme/01-ileri-seviye-r-01.html">Bilgisayarlı Düşünme</a></li><li class="breadcrumb-item"><a href="../03-bilgisayarli-dusunme/01-ileri-seviye-r-01.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Kontrol yapıları</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Kenar çubuğunu değiştir" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      <img src="../images/ybva.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none"></a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Yaşam Bilimlerinde Veri Analizi</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/emrahkirdok/ybva/" title="Kaynak Kodu" class="quarto-navigation-tool px-1" aria-label="Kaynak Kodu"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Okuyucu modunu değiştir">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Aramak"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Önsöz</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../CONTRIBUTING.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Katkı Sunma</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Derse Hazırlık</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Bölümü değiştir">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-kurulum/01-r-rstudio-kurulum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R ve RStudio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-kurulum/02-ilk-kurallar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Önemli Konular</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-kurulum/03-r-rstudio-ilk-adimlar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">İlk adımlar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01-kurulum/04-klasor-islemleri.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Klasör İşlemleri</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Veri Analizi</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Bölümü değiştir">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/01-veri-bilimine-giris.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Neden Veri Analizi?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/02-bilimsel-yontem.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Bilimsel Yöntem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/03-r-giris.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">R ve Rstudio ile çalışma</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/04-vektorler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Vektörler</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/05-matrisler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Matrisler</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/06-veri-cerceveleri.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Veri Çerçeveleri</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/07-listeler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Listeler</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/08-dosya-okuma.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Dosya okuma</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/09-rmarkdown.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Rmarkdown Kullanımı</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/10-bilimsel-hikaye-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Bilimsel Hikaye Anlatımı 1</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/11-bilimsel-hikaye-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Bilimsel Hikaye Anlatımı 2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/12-bilimsel-hikaye-03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Bilimsel Hikaye Anlatımı 3</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02-veri-analizi/13-t-test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">T-Test</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Bilgisayarlı Düşünme</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Bölümü değiştir">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03-bilgisayarli-dusunme/01-ileri-seviye-r-01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Kontrol yapıları</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03-bilgisayarli-dusunme/02-ileri-seviye-r-02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Fonksiyonlar</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03-bilgisayarli-dusunme/03-dna-dizisi-yukleme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">DNA ile çalışma</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03-bilgisayarli-dusunme/04-dna-dizi-islemleri.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">DNA ile çalışma</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03-bilgisayarli-dusunme/05-dna-dizi-islemleri.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">DNA dizi işlemleri - 3</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03-bilgisayarli-dusunme/06-adim-adim-kodlama-translasyon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Translasyon fonksiyonu anlatımı</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Pratikler - Ödevler</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Bölümü değiştir">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04-pratikler/01-veri-analizi/01-vektorler.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Vektörler Ödevi</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04-pratikler/01-veri-analizi/02-pratik.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Pratik 2023-04-06</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04-pratikler/01-veri-analizi/04-vize-pratik.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">pratik-2023-04-19</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04-pratikler/02-bilgisayarli-dusunme/01-DNA-transkripsiyon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">DNA üzerinde işlemler</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04-pratikler/02-bilgisayarli-dusunme/03-vize-sinavi-cevaplari.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Bilgisayarlı Düşünme Vize</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Türkiye'nin Verisi</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kaynakça</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Ekler</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Bölümü değiştir">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../10-ekler/01-sunumlar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Ders sunumları</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Içindekiler</h2>
+   
+  <ul>
+<li><a href="#d%C3%B6ng%C3%BCler-for" id="toc-döngüler-for" class="nav-link active" data-scroll-target="#d%C3%B6ng%C3%BCler-for"><span class="header-section-number">18.1</span> Döngüler (<code>for</code>)</a></li>
+  <li><a href="#kontrol-yap%C4%B1s%C4%B1-if-else" id="toc-kontrol-yapısı-if-else" class="nav-link" data-scroll-target="#kontrol-yap%C4%B1s%C4%B1-if-else"><span class="header-section-number">18.2</span> Kontrol yapısı (<code>if-else</code>)</a></li>
+  <li><a href="#farkl%C4%B1-yap%C4%B1lar%C4%B1-birle%C5%9Ftirelim" id="toc-farklı-yapıları-birleştirelim" class="nav-link" data-scroll-target="#farkl%C4%B1-yap%C4%B1lar%C4%B1-birle%C5%9Ftirelim"><span class="header-section-number">18.3</span> Farklı yapıları birleştirelim</a></li>
+  <li><a href="#%C3%B6dev" id="toc-ödev" class="nav-link" data-scroll-target="#%C3%B6dev"><span class="header-section-number">18.4</span> Ödev</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../03-bilgisayarli-dusunme/01-ileri-seviye-r-01.html">Bilgisayarlı Düşünme</a></li><li class="breadcrumb-item"><a href="../03-bilgisayarli-dusunme/01-ileri-seviye-r-01.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Kontrol yapıları</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Kontrol yapıları</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>Bu kısımda ileri seviye R kullanımına başlayacağız. Veri Analizi dersi kapsamında daha çok R ile veri analizi üzerine çalışmalar yapıldı. Bu kısımda ise R ile programlama adımlarını incelemeye başlayacağız.</p>
+<p>Kontrol yapıları gerçekleştireceğiniz analiz adımlarında farklı aşamaların çalıştırılması ve veri analizi akışının kontrol edilmesini sağlamaktadır. Bu sayede karmaşık verisetlerinde farklı analiz adımları gerçekleştirebiliriz.</p>
+<p>Küçük bir örnekle bunu açıklamaya çalışalım. Elimizde aşağıdaki gibi bir vektör olsun:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yaprak_uzunlugu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.3</span>, <span class="fl">3.4</span>, <span class="fl">4.5</span>, <span class="fl">1.2</span>, <span class="fl">3.4</span>, </span>
+<span>                    <span class="fl">3</span>, <span class="fl">1.8</span>, <span class="fl">6.3</span>, <span class="fl">2.1</span>, <span class="fl">5</span><span class="op">)</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Bu vektörde bulunan her elemana belirli bir fonksiyonu uygulamak istediğimizi düşünelim. Şu ana kadar öğrendiğimiz bilgilerle, bu vektör içerisindeki elemanları manuel olarak seçerek bu işlemleri gerçekleştirebiliyoruz.</p>
+<p>Ancak R üzerinde kullanacağımız döngü yapısı (<code>for</code> döngüsü), bize bu vektördeki her elemana erişip, o elemanla işlem yapma şansı sağlamaktadır.</p>
+<p>Peki, 5’den büyük ve küçük olan elemanlara farklı işlemler yapmak istersek? O zaman da <code>if-else</code> kontrol yapısı bize yardımcı olacaktır. Bu sayede bir elemanın 5’den büyük veya küçük olma koşulunu inceleyerek, ona göre işlemler gerçekleştirebilriz.</p>
+<section id="döngüler-for" class="level2" data-number="18.1"><h2 data-number="18.1" class="anchored" data-anchor-id="döngüler-for">
+<span class="header-section-number">18.1</span> Döngüler (<code>for</code>)</h2>
+<p>Veri ile çalışırken çoğunlukla belirli fonksiyonları art arda, farklı verilere uygulamamız gerekir. Dolayısıyla aynı işi döngü halinde yapmalıyız.</p>
+<p>Basit bir örnek verelim. Önce bir sayı vektörü oluşturalım:</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yaprak_uzunlugu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.3</span>, <span class="fl">3.4</span>, <span class="fl">4.5</span>, <span class="fl">1.2</span>, <span class="fl">3.4</span>, </span>
+<span>                    <span class="fl">3</span>, <span class="fl">1.8</span>, <span class="fl">6.3</span>, <span class="fl">2.1</span>, <span class="fl">5</span><span class="op">)</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Bu vektörün her elemanına 5 ekleyerek çıkan sonucu ikiye bölmek istediğimiz düşünelim. Çok mantıksız bir örnek olabilir ama olayın işleyişini kavramamıza yardımcı olacaktır.</p>
+<p>Önce ilk eleman için yapalım. Vektörler ve vektörlerde indisleme konusunu hatırlamak isterseniz <a href="../02-veri-analizi/04-vektorler.html" class="quarto-xref"><span>Bölüm 8</span></a>’i tekrar gözden geçirebilirsiniz.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">yaprak_uzunlugu</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">+</span><span class="fl">5</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.65</code></pre>
+</div>
+</div>
+<p>Şimdi ise ikinci eleman için bunu yapalım:</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">yaprak_uzunlugu</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">+</span><span class="fl">5</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.2</code></pre>
+</div>
+</div>
+<p>Dikkat ederseniz sadece kullandığımız vektördeki indis değişiyor. Dolayısıyla <code>for</code> döngüsü kullanırsak bu işi daha kolay bir şekilde halledebiliriz.</p>
+<p>Öncelikle <code>for</code> döngüsünün genel yapısına bakalım:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ( ÇALIŞILACAK ELEMAN KÜMESİ ){</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    YAPILACAK İŞ</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Burada DÖNGÜ ile belirtilen kısma, hangi elemanlardan bir döngü oluşturacağımızı yazıyoruz. <code>for</code> döngüsü bize o elemanları tek tek seçme şansı veriyor. Daha sonra süslü parantezler içerisindeli <strong>YAPILACAK İŞ</strong> adımı çalıştırılıyor.</p>
+<p>Ancak bu yapıyı yukarıdaki gibi kullanmalıyız.</p>
+<p>Şimdi döngümüzü yazalım:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">yaprak_uzunlugu</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">sonuc</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">yaprak_uzunlugu</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">+</span><span class="fl">5</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sonuc</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.65
+[1] 4.2
+[1] 4.75
+[1] 3.1
+[1] 4.2
+[1] 4
+[1] 3.4
+[1] 5.65
+[1] 3.55
+[1] 5</code></pre>
+</div>
+</div>
+<p>Bu işlemi yakından inceleyelim. Önce bir sayı vektörü oluşturuyoruz. Ancak bu sayı vektörünü kullanacağımız vektörün uzunluğuna göre belirliyoruz. Yani elimizde 1’den 10’a kadar bir sayı dizisi oluştuyor.</p>
+<p><code>i in 1:length(yaprak_uzunlugu)</code> cümlesini kullandığımızda R bize elimizdeki eleman kümesini tek tek seçme şansı veriyor.</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">yaprak_uzunlugu</span><span class="op">)</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+</div>
+</div>
+<p>For döngüsü ise <code>i</code> adından bir değişken oluşturuyor. Önce <code>i</code> değişkenine birinci eleman olan 1 değerini atıyor ve belirtilen işlemi yapıyor.</p>
+<p>O işlem bitince, <code>i</code> değerine ikinci elemanı atanıyor ve bu sefer <code>i &lt;- 2</code> için işlemi gerçekleştiriyor.</p>
+<p>Bu işlem oluşturduğumuz sayı vektörü bitene kadar devam ediyor.</p>
+<p>Bir önceki örnekte vektördeki eleman sırasını kullandık. İstersek doğrudan vektördeki elemanları da kullanabiliriz. Bunun için ise <code>i</code> yerine <code>eleman</code> isimli bir değişken oluşturalım:</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">eleman</span> <span class="kw">in</span> <span class="va">yaprak_uzunlugu</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">sonuc</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">eleman</span><span class="op">+</span><span class="fl">5</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">sonuc</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.65
+[1] 4.2
+[1] 4.75
+[1] 3.1
+[1] 4.2
+[1] 4
+[1] 3.4
+[1] 5.65
+[1] 3.55
+[1] 5</code></pre>
+</div>
+</div>
+<p>Gördüğünüz iki <code>for</code> döngüsü de aynı işi yapmaktadır. İlk döngüde Bunu şu şekile görselleştirebiliriz (<a href="#fig-for-loop" class="quarto-xref">Şekil&nbsp;<span>18.1</span></a>).</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-for-loop" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-for-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 337.39 284.40" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 280.4)"><title>for</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-280.4 333.39,-280.4 333.39,4 -4,4"></polygon><!-- ilk --><g id="node1" class="node"><title>ilk</title>
+<polygon fill="none" stroke="black" points="169.5,-276.2 63.89,-276.2 63.89,-235 169.5,-235 169.5,-276.2"></polygon><text text-anchor="middle" x="116.69" y="-259.8" font-family="Times,serif" font-size="14.00">Birinci elemanı</text><text text-anchor="middle" x="116.69" y="-243" font-family="Times,serif" font-size="14.00">seç</text></g><!-- islem --><g id="node4" class="node"><title>islem</title>
+<ellipse fill="none" stroke="black" cx="116.69" cy="-179.8" rx="116.89" ry="18"></ellipse><text text-anchor="middle" x="116.69" y="-175.6" font-family="Times,serif" font-size="14.00">İstenen işlemi gerçekleştir</text></g><!-- ilk&#45;&gt;islem --><g id="edge1" class="edge"><title>ilk-&gt;islem</title>
+<path fill="none" stroke="black" d="M116.69,-234.82C116.69,-226.69 116.69,-217.13 116.69,-208.33"></path><polygon fill="black" stroke="black" points="120.19,-208.12 116.69,-198.12 113.19,-208.12 120.19,-208.12"></polygon></g><!-- son --><g id="node2" class="node"><title>son</title>
+<polygon fill="none" stroke="black" points="192.69,-124.8 85.93,-106.8 192.69,-88.8 299.46,-106.8 192.69,-124.8"></polygon><text text-anchor="middle" x="192.69" y="-102.6" font-family="Times,serif" font-size="14.00">Son eleman mı?</text></g><!-- devam --><g id="node3" class="node"><title>devam</title>
+<polygon fill="none" stroke="black" points="329.59,-273.6 195.79,-273.6 195.79,-237.6 329.59,-237.6 329.59,-273.6"></polygon><text text-anchor="middle" x="262.69" y="-251.4" font-family="Times,serif" font-size="14.00">Sonraki elemana geç</text></g><!-- son&#45;&gt;devam --><g id="edge3" class="edge"><title>son-&gt;devam</title>
+<path fill="none" stroke="black" d="M210.07,-122.11C221.06,-132.11 234.67,-146.38 242.69,-161.8 253.29,-182.18 258.28,-207.89 260.62,-227.07"></path><polygon fill="black" stroke="black" points="257.17,-227.68 261.7,-237.26 264.13,-226.94 257.17,-227.68"></polygon><text text-anchor="middle" x="276.09" y="-175.6" font-family="Times,serif" font-size="14.00">FALSE</text></g><!-- sonlandır --><g id="node5" class="node"><title>sonlandır</title>
+<polygon fill="none" stroke="black" points="256.02,-36 129.37,-36 129.37,0 256.02,0 256.02,-36"></polygon><text text-anchor="middle" x="192.69" y="-13.8" font-family="Times,serif" font-size="14.00">Döngüyü sonlandır</text></g><!-- son&#45;&gt;sonlandır --><g id="edge5" class="edge"><title>son-&gt;sonlandır</title>
+<path fill="none" stroke="black" d="M192.69,-88.65C192.69,-76.52 192.69,-60.02 192.69,-46.12"></path><polygon fill="black" stroke="black" points="196.19,-46.11 192.69,-36.11 189.19,-46.11 196.19,-46.11"></polygon><text text-anchor="middle" x="210.97" y="-58.2" font-family="Times,serif" font-size="14.00">TRUE</text></g><!-- devam&#45;&gt;islem --><g id="edge4" class="edge"><title>devam-&gt;islem</title>
+<path fill="none" stroke="black" d="M228.83,-237.48C207.8,-226.85 180.63,-213.12 158.29,-201.83"></path><polygon fill="black" stroke="black" points="159.87,-198.7 149.37,-197.32 156.71,-204.95 159.87,-198.7"></polygon></g><!-- islem&#45;&gt;son --><g id="edge2" class="edge"><title>islem-&gt;son</title>
+<path fill="none" stroke="black" d="M134.7,-161.97C145.19,-152.18 158.51,-139.73 169.74,-129.24"></path><polygon fill="black" stroke="black" points="172.21,-131.73 177.12,-122.34 167.43,-126.61 172.21,-131.73"></polygon></g></g></svg>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-for-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Şekil&nbsp;18.1: <code>for</code> döngüsü hakkındaki diyagram
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="kontrol-yapısı-if-else" class="level2" data-number="18.2"><h2 data-number="18.2" class="anchored" data-anchor-id="kontrol-yapısı-if-else">
+<span class="header-section-number">18.2</span> Kontrol yapısı (<code>if-else</code>)</h2>
+<p>Eğer yapacağımız analiz adımında veriye bağlı olarak koşullu bir analiz gerçekleştirilecekse <code>if-else</code> yapısını kullanıyoruz.</p>
+<p>Mesela, elimizde bir sayımız olsun. Eğer bu sayı 5’ten büyük veya eşit ise ekrana “Bu sayı 5’den büyük veya eşittir” yazsın. Eğer 5’den küçük ise, “Bu sayı 5’den küçüktür” yazsın.</p>
+<p><a href="#fig-if-else-1" class="quarto-xref">Şekil&nbsp;<span>18.2</span></a> bize bu işlemi şematize edecektir.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-if-else-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-if-else-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 381.24 382.43" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 378.43)"><title>g</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-378.43 377.24,-378.43 377.24,4 -4,4"></polygon><!-- sayi --><g id="node1" class="node"><title>sayi</title>
+<polygon fill="none" stroke="black" points="114.74,-374.43 60.74,-374.43 60.74,-338.43 114.74,-338.43 114.74,-374.43"></polygon><text text-anchor="middle" x="87.74" y="-352.23" font-family="Times,serif" font-size="14.00">Sayı</text></g><!-- kontrol --><g id="node2" class="node"><title>kontrol</title>
+<polygon fill="none" stroke="black" points="87.74,-301.33 -0.24,-243.03 87.74,-184.73 175.71,-243.03 87.74,-301.33"></polygon><text text-anchor="middle" x="87.74" y="-255.63" font-family="Times,serif" font-size="14.00">5'den büyük </text><text text-anchor="middle" x="87.74" y="-238.83" font-family="Times,serif" font-size="14.00"> veya </text><text text-anchor="middle" x="87.74" y="-222.03" font-family="Times,serif" font-size="14.00"> 5'e eşit</text></g><!-- sayi&#45;&gt;kontrol --><g id="edge1" class="edge"><title>sayi-&gt;kontrol</title>
+<path fill="none" stroke="black" d="M87.74,-338.03C87.74,-330.58 87.74,-321.36 87.74,-311.63"></path><polygon fill="black" stroke="black" points="91.24,-311.36 87.74,-301.36 84.24,-311.36 91.24,-311.36"></polygon></g><!-- ilk --><g id="node3" class="node"><title>ilk</title>
+<ellipse fill="none" stroke="black" cx="301.74" cy="-243.03" rx="71.51" ry="53.35"></ellipse><text text-anchor="middle" x="301.74" y="-264.03" font-family="Times,serif" font-size="14.00">Ekrana yazdır:</text><text text-anchor="middle" x="301.74" y="-247.23" font-family="Times,serif" font-size="14.00">5'den büyük </text><text text-anchor="middle" x="301.74" y="-230.43" font-family="Times,serif" font-size="14.00"> veya </text><text text-anchor="middle" x="301.74" y="-213.63" font-family="Times,serif" font-size="14.00"> 5'e eşit</text></g><!-- kontrol&#45;&gt;ilk --><g id="edge2" class="edge"><title>kontrol-&gt;ilk</title>
+<path fill="none" stroke="black" d="M175.7,-243.03C190.27,-243.03 205.32,-243.03 219.73,-243.03"></path><polygon fill="black" stroke="black" points="220.09,-246.53 230.09,-243.03 220.09,-239.53 220.09,-246.53"></polygon><text text-anchor="middle" x="202.85" y="-250.23" font-family="Times,serif" font-size="14.00">TRUE</text></g><!-- ikinci --><g id="node4" class="node"><title>ikinci</title>
+<ellipse fill="none" stroke="black" cx="172.74" cy="-102.42" rx="71.51" ry="29.33"></ellipse><text text-anchor="middle" x="172.74" y="-106.62" font-family="Times,serif" font-size="14.00">Ekrana yazdır:</text><text text-anchor="middle" x="172.74" y="-89.82" font-family="Times,serif" font-size="14.00">5'den küçük</text></g><!-- kontrol&#45;&gt;ikinci --><g id="edge3" class="edge"><title>kontrol-&gt;ikinci</title>
+<path fill="none" stroke="black" d="M112.78,-201.19C124.7,-181.75 138.84,-158.69 150.39,-139.85"></path><polygon fill="black" stroke="black" points="153.43,-141.6 155.67,-131.25 147.46,-137.94 153.43,-141.6"></polygon><text text-anchor="middle" x="165.13" y="-154.03" font-family="Times,serif" font-size="14.00">FALSE</text></g><!-- sonlandir --><g id="node5" class="node"><title>sonlandir</title>
+<polygon fill="none" stroke="black" points="286.33,-36 173.14,-36 173.14,0 286.33,0 286.33,-36"></polygon><text text-anchor="middle" x="229.74" y="-13.8" font-family="Times,serif" font-size="14.00">İşlemi sonlandır</text></g><!-- ilk&#45;&gt;sonlandir --><g id="edge4" class="edge"><title>ilk-&gt;sonlandir</title>
+<path fill="none" stroke="black" d="M289.1,-190.39C280.34,-156.61 267.76,-111.72 253.74,-73 250.44,-63.89 246.3,-54.15 242.4,-45.49"></path><polygon fill="black" stroke="black" points="245.51,-43.87 238.15,-36.25 239.16,-46.8 245.51,-43.87"></polygon></g><!-- ikinci&#45;&gt;sonlandir --><g id="edge5" class="edge"><title>ikinci-&gt;sonlandir</title>
+<path fill="none" stroke="black" d="M191.72,-73.97C198.29,-64.46 205.64,-53.85 212.1,-44.5"></path><polygon fill="black" stroke="black" points="215.17,-46.22 217.98,-36 209.41,-42.24 215.17,-46.22"></polygon></g></g></svg>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-if-else-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Şekil&nbsp;18.2: <code>if-else</code> döngüsü hakkındaki diyagram
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>İlk olarak bir sayı belirleyelim:</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sayi</span> <span class="op">&lt;-</span> <span class="fl">12</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>İlk koşulu çalıştıralım:</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sayi</span> <span class="op">&gt;=</span> <span class="fl">5</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>Bu işlemin sonucunda TRUE değeri geri döndürüldü. Burada bir karşılaştırma işlemi yaptık. Yani elimizdeki sayı 5’e eşit veya 5’den büyük. Ama asla 5’den küçük değil.</p>
+<p>Şimdi <code>if-else</code> yapısına bakalım:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> ( KOŞUL ){</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    KOŞUL DOĞRU İSE BURAYI ÇALIŞTIR</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    KOŞUL DOĞRU DEĞİL İSE BURAYI ÇALIŞTIR</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>İlk önce bir koşul belirliyoruz (sayının 5’e eşit veya 5’den büyük olması). Eğer bu koşul doğru ise ilk yapı çalışıyor, eğer bu koşul doğru değil ise ikinci satır çalışıyor.</p>
+<p>Şimdi bu örnek ile gerçekten çalışabilir bir kod yazalım:</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sayi</span> <span class="op">&lt;-</span> <span class="fl">12</span></span>
+<span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="va">sayi</span> <span class="op">&gt;=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"bu sayi bese esit veya besten buyuktur"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"bu sayi besten kucuktur"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "bu sayi bese esit veya besten buyuktur"</code></pre>
+</div>
+</div>
+</section><section id="farklı-yapıları-birleştirelim" class="level2" data-number="18.3"><h2 data-number="18.3" class="anchored" data-anchor-id="farklı-yapıları-birleştirelim">
+<span class="header-section-number">18.3</span> Farklı yapıları birleştirelim</h2>
+<p>Şimdi tekrar yaprak uzunluğu örneğimize gelelim ve bu iki yapıyı birleştirelim. Bu sefer her elemana farklı işlemler uygulamaya çalışalım.</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yaprak_uzunlugu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.3</span>, <span class="fl">3.4</span>, <span class="fl">4.5</span>, <span class="fl">1.2</span>, <span class="fl">3.4</span>, </span>
+<span>                    <span class="fl">3</span>, <span class="fl">1.8</span>, <span class="fl">6.3</span>, <span class="fl">2.1</span>, <span class="fl">5</span><span class="op">)</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Elimizde artık iki tane koşul olsun:</p>
+<ul>
+<li>Eğer eleman 5’den büyük veya eşitse elemana 5 ekle ve ikiye böl.</li>
+<li>Eğer eleman 5’den küçükse elemana 10 ekle ve 3’e böl.</li>
+</ul>
+<p>Yine örneğimiz biraz rastgele oldu. Böyle bir senaryo için <code>if-else</code> yapısı kullanmalıyız. Önce cevabı görelim, daha sonra adım adım inceleyelim:</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">eleman</span> <span class="kw">in</span> <span class="va">yaprak_uzunlugu</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">eleman</span> <span class="op">&gt;=</span> <span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
+<span>        <span class="va">sonuc</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">eleman</span><span class="op">+</span><span class="fl">5</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"yaprak uzunlugu 5'den buyuk veya esit, ilk formul uygulandı:"</span>, <span class="va">sonuc</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>        <span class="va">sonuc</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">eleman</span><span class="op">+</span><span class="fl">10</span><span class="op">)</span><span class="op">/</span><span class="fl">3</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"yaprak uzunlugu 5'den kucuk, ikinci formul uygulandı:"</span>, <span class="va">sonuc</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span><span class="op">}</span></span></code><button title="Panoya Kopyala" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>yaprak uzunlugu 5'den kucuk, ikinci formul uygulandı: 4.1 
+yaprak uzunlugu 5'den kucuk, ikinci formul uygulandı: 4.466667 
+yaprak uzunlugu 5'den kucuk, ikinci formul uygulandı: 4.833333 
+yaprak uzunlugu 5'den kucuk, ikinci formul uygulandı: 3.733333 
+yaprak uzunlugu 5'den kucuk, ikinci formul uygulandı: 4.466667 
+yaprak uzunlugu 5'den kucuk, ikinci formul uygulandı: 4.333333 
+yaprak uzunlugu 5'den kucuk, ikinci formul uygulandı: 3.933333 
+yaprak uzunlugu 5'den buyuk veya esit, ilk formul uygulandı: 5.65 
+yaprak uzunlugu 5'den kucuk, ikinci formul uygulandı: 4.033333 
+yaprak uzunlugu 5'den buyuk veya esit, ilk formul uygulandı: 5 </code></pre>
+</div>
+</div>
+<p>Şimdi bu yapıyı daha iyi anlamak için görselleşirelim (<a href="#fig-all-loop" class="quarto-xref">Şekil&nbsp;<span>18.3</span></a>):</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-all-loop" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-all-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 543.91 544.23" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none"><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 540.23)"><title>g</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-540.23 539.91,-540.23 539.91,4 -4,4"></polygon><!-- eleman --><g id="node1" class="node"><title>eleman</title>
+<polygon fill="none" stroke="black" points="278.28,-463.23 150.35,-463.23 150.35,-427.23 278.28,-427.23 278.28,-463.23"></polygon><text text-anchor="middle" x="214.32" y="-441.03" font-family="Times,serif" font-size="14.00">Birinci elemanı seç</text></g><!-- kontrol --><g id="node2" class="node"><title>kontrol</title>
+<polygon fill="none" stroke="black" points="188.32,-390.13 100.34,-331.83 188.32,-273.53 276.29,-331.83 188.32,-390.13"></polygon><text text-anchor="middle" x="188.32" y="-344.43" font-family="Times,serif" font-size="14.00">5'den büyük </text><text text-anchor="middle" x="188.32" y="-327.63" font-family="Times,serif" font-size="14.00"> veya </text><text text-anchor="middle" x="188.32" y="-310.83" font-family="Times,serif" font-size="14.00"> 5'e eşit mi?</text></g><!-- eleman&#45;&gt;kontrol --><g id="edge2" class="edge"><title>eleman-&gt;kontrol</title>
+<path fill="none" stroke="black" d="M210.25,-426.83C208.07,-417.46 205.23,-405.29 202.32,-392.83"></path><polygon fill="black" stroke="black" points="205.67,-391.77 199.99,-382.83 198.85,-393.36 205.67,-391.77"></polygon></g><!-- ilk --><g id="node4" class="node"><title>ilk</title>
+<ellipse fill="none" stroke="black" cx="433.32" cy="-331.83" rx="102.69" ry="29.33"></ellipse><text text-anchor="middle" x="433.32" y="-336.03" font-family="Times,serif" font-size="14.00">Birinci formülü uygula</text><text text-anchor="middle" x="433.32" y="-319.23" font-family="Times,serif" font-size="14.00">Sonucu ekrana yazdır</text></g><!-- kontrol&#45;&gt;ilk --><g id="edge3" class="edge"><title>kontrol-&gt;ilk</title>
+<path fill="none" stroke="black" d="M276.08,-331.83C290.36,-331.83 305.32,-331.83 320.11,-331.83"></path><polygon fill="black" stroke="black" points="320.3,-335.33 330.3,-331.83 320.3,-328.33 320.3,-335.33"></polygon><text text-anchor="middle" x="303.39" y="-339.03" font-family="Times,serif" font-size="14.00">TRUE</text></g><!-- ikinci --><g id="node5" class="node"><title>ikinci</title>
+<ellipse fill="none" stroke="black" cx="194.32" cy="-191.22" rx="99.69" ry="29.33"></ellipse><text text-anchor="middle" x="194.32" y="-195.42" font-family="Times,serif" font-size="14.00">İkinci formülü uygula</text><text text-anchor="middle" x="194.32" y="-178.62" font-family="Times,serif" font-size="14.00">Sonucu ekrana yazdır</text></g><!-- kontrol&#45;&gt;ikinci --><g id="edge4" class="edge"><title>kontrol-&gt;ikinci</title>
+<path fill="none" stroke="black" d="M190.74,-274.85C191.37,-260.27 192.04,-244.86 192.62,-231.36"></path><polygon fill="black" stroke="black" points="196.14,-231.13 193.07,-220.99 189.14,-230.82 196.14,-231.13"></polygon><text text-anchor="middle" x="212.71" y="-242.83" font-family="Times,serif" font-size="14.00">FALSE</text></g><!-- son --><g id="node3" class="node"><title>son</title>
+<polygon fill="none" stroke="black" points="194.32,-124.8 87.55,-106.8 194.32,-88.8 301.08,-106.8 194.32,-124.8"></polygon><text text-anchor="middle" x="194.32" y="-102.6" font-family="Times,serif" font-size="14.00">Son eleman mı?</text></g><!-- devam --><g id="node6" class="node"><title>devam</title>
+<polygon fill="none" stroke="black" points="132.45,-463.23 0.18,-463.23 0.18,-427.23 132.45,-427.23 132.45,-463.23"></polygon><text text-anchor="middle" x="66.32" y="-441.03" font-family="Times,serif" font-size="14.00">Sonraki elemanı seç</text></g><!-- son&#45;&gt;devam --><g id="edge7" class="edge"><title>son-&gt;devam</title>
+<path fill="none" stroke="black" d="M151.9,-117.67C128.22,-125.51 100.51,-139.06 85.32,-161.8 32.08,-241.48 48.92,-363.64 59.97,-417.34"></path><polygon fill="black" stroke="black" points="56.55,-418.09 62.08,-427.13 63.4,-416.62 56.55,-418.09"></polygon><text text-anchor="middle" x="76.71" y="-242.83" font-family="Times,serif" font-size="14.00">FALSE</text></g><!-- Döngüyü sonlandır. --><g id="node8" class="node"><title>Döngüyü sonlandır.</title>
+<ellipse fill="none" stroke="black" cx="194.32" cy="-18" rx="89.79" ry="18"></ellipse><text text-anchor="middle" x="194.32" y="-13.8" font-family="Times,serif" font-size="14.00">Döngüyü sonlandır.</text></g><!-- son&#45;&gt;Döngüyü sonlandır. --><g id="edge9" class="edge"><title>son-&gt;Döngüyü sonlandır.</title>
+<path fill="none" stroke="black" d="M194.32,-88.65C194.32,-76.52 194.32,-60.02 194.32,-46.12"></path><polygon fill="black" stroke="black" points="197.82,-46.11 194.32,-36.11 190.82,-46.11 197.82,-46.11"></polygon><text text-anchor="middle" x="212.59" y="-58.2" font-family="Times,serif" font-size="14.00">TRUE</text></g><!-- ilk&#45;&gt;son --><g id="edge5" class="edge"><title>ilk-&gt;son</title>
+<path fill="none" stroke="black" d="M417.17,-302.5C395.26,-266.08 353.1,-202.68 303.32,-161.8 283.5,-145.53 257.97,-132.54 236.59,-123.39"></path><polygon fill="black" stroke="black" points="237.68,-120.05 227.1,-119.46 235,-126.52 237.68,-120.05"></polygon></g><!-- ikinci&#45;&gt;son --><g id="edge6" class="edge"><title>ikinci-&gt;son</title>
+<path fill="none" stroke="black" d="M194.32,-161.39C194.32,-152.9 194.32,-143.65 194.32,-135.25"></path><polygon fill="black" stroke="black" points="197.82,-135.2 194.32,-125.2 190.82,-135.2 197.82,-135.2"></polygon></g><!-- devam&#45;&gt;kontrol --><g id="edge8" class="edge"><title>devam-&gt;kontrol</title>
+<path fill="none" stroke="black" d="M85.11,-427.07C100.76,-412.78 123.67,-391.86 143.94,-373.36"></path><polygon fill="black" stroke="black" points="146.53,-375.73 151.55,-366.4 141.81,-370.56 146.53,-375.73"></polygon></g><!-- Başla --><g id="node7" class="node"><title>Başla</title>
+<ellipse fill="none" stroke="black" cx="214.32" cy="-518.23" rx="33.62" ry="18"></ellipse><text text-anchor="middle" x="214.32" y="-514.03" font-family="Times,serif" font-size="14.00">Başla</text></g><!-- Başla&#45;&gt;eleman --><g id="edge1" class="edge"><title>Başla-&gt;eleman</title>
+<path fill="none" stroke="black" d="M214.32,-500.04C214.32,-492.02 214.32,-482.28 214.32,-473.3"></path><polygon fill="black" stroke="black" points="217.82,-473.26 214.32,-463.26 210.82,-473.26 217.82,-473.26"></polygon></g></g></svg>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-all-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Şekil&nbsp;18.3: İki kontrol yapısını da birleştirmek
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="ödev" class="level2" data-number="18.4"><h2 data-number="18.4" class="anchored" data-anchor-id="ödev">
+<span class="header-section-number">18.4</span> Ödev</h2>
+<p>Burada öğrendiklerimizi pekiştirmek için <a href="../04-pratikler/02-bilgisayarli-dusunme/01-DNA-transkripsiyon.html" class="quarto-xref"><span>Bölüm 27</span></a>’de bulunan ödeve bakalım ve haftaya kadar cevaplayalım.</p>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Kopyalandı");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Kopyalandı");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/emrahkirdok\.github\.io\/ybva\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="../02-veri-analizi/13-t-test.html" class="pagination-link" aria-label="T-Test">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">T-Test</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../03-bilgisayarli-dusunme/02-ileri-seviye-r-02.html" class="pagination-link" aria-label="Fonksiyonlar">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Fonksiyonlar</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Yaşam Bilimlerinde Veri Analizi Emrah Kırdök, Ph.D.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Bu kitap Veri Analizi, İstatistiksel Öğrenme, ve Yaşam Bilimlerinde Veri Analizi Dersleri için kaynak olarak kullanılacaktır.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>
